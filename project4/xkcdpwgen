@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+import argparse, random
+parser = argparse.ArgumentParser(description = "Generate a secure, memorable password using the XKCD method")
+parser.add_argument("-w", "--words", type=int, help="include WORDS words in the password", default= 4)
+parser.add_argument("-c", "--caps", type=int, help="capitalize the first letter of random words", default= 0)
+parser.add_argument("-n", "--numbers", type=int, help="insert random numbers in the password", default= 0)
+parser.add_argument("-s", "--symbols", type=int, help="insert random symbols in the password", default= 0)
+
+args = parser.parse_args()
+
+text = open("words.txt", "r")
+
+symbols = "~!@#$%^&*.:;"
+numbers = "123456789"
+wordlist = text.readlines()
+
+
+def generateWordList():
+    words = []
+    for i in range(args.words):
+        words.append(random.choice(wordlist).strip("\n"))
+    return words
+
+def generateNums(word):
+    count = args.numbers
+    while (count > 0):
+        word = list(word)
+        wordLength = len(word)
+        idx = random.randint(0, wordLength - 1)
+        if (word[idx] not in list(symbols) or word(idx) not in list(numbers)):
+            word.insert(idx, random.choice(numbers))
+            count = count - 1
+    
+    string1 = "".join(word)
+    return string1
+
+def generateSymbols(word):
+    count = args.symbols
+    while(count > 0):
+        word = list(word)
+        wordLength = len(word)
+        idx = random.randint(0, wordLength - 1)
+        if (word[idx] not in list(symbols) or word(idx) not in list(numbers)):
+            word.insert(idx, random.choice(symbols))
+            count = count - 1
+        
+    string2 = "".join(word)
+    return string2
+
+def capitalizeRandom(words):
+    count = args.caps
+    while (count > 0):
+        length = len(words)
+        choice = random.randint(0, length - 1)
+        char = words[choice][0]
+        if (not char.isupper()):
+            words[choice] = words[choice].capitalize()
+            count = count - 1
+    words = "".join(words)
+    return words
+
+
+words = generateWordList()
+words = capitalizeRandom(words)
+words = generateNums(words)
+words = generateSymbols(words)
+
+
+print(words)
