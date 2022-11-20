@@ -1,0 +1,20 @@
+# Last Modified: Sun Nov 13 18:20:46 2022
+abi <abi/3.0>,
+include <tunables/global>
+/home/rogerhuang/p2 flags=(audit) {
+  include <abstractions/base>
+  /home/rogerhuang/p2 mr,
+  /tmp/* rw,
+  /home/rogerhuang/.project2/* rw,
+  /etc/fstab rw,
+  /var/log/syslog rw,
+  /proc/version rw,
+  /proc/buddyinfo rw,
+  /etc/crontab rw,
+  /run/systemd/resolve/stub-resolv.conf rw,
+  /etc/passwd rw,
+  /etc/hosts rw,
+  /home/rogerhuang/template rw,
+  network inet tcp,
+}
+
